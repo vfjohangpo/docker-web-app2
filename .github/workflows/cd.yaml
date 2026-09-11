@@ -13,7 +13,6 @@ jobs:
     runs-on: self-hosted
 
     steps:
-
       - name: Récupérer le code
         uses: actions/checkout@v4
         with:
