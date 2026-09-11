@@ -1,0 +1,24 @@
+services:
+  frontend:
+    image: johangpo/mon-frontend:1.0
+    ports:
+      - "8080:80"
+
+  backend:
+    image: johangpo/mon-backend:1.0
+    ports:
+      - "5000:5000"
+    depends_on:
+      - database
+
+  database:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: myapp
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

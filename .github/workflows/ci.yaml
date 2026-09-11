@@ -1,0 +1,49 @@
+name: CI Docker Web App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer les dépendances
+        run: |
+          pip install -r backend/requirements.txt
+
+      - name: Vérifier Python
+        run: |
+          python -m py_compile backend/app.py
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Construire l'image Frontend
+        run: |
+          docker build -t mon-frontend ./frontend
+
+      - name: Construire l'image Backend
+        run: |
+          docker build -t mon-backend ./backend
