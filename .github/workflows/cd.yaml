@@ -1,5 +1,4 @@
 name: CD Docker Web App
-
 on:
   workflow_run:
     workflows:
